@@ -1,0 +1,119 @@
+INSERT INTO `prefectures`(`prefId`, `prefName`) VALUES 
+(1,'Hokkaidō'),
+(2,'Aomori'),
+(3,'Iwate'),
+(4,'Miyagi'),
+(5,'Akita'),
+(6,'Yamagata'),
+(7,'Fukushima'),
+(8,'Ibaraki'),
+(9,'Tochigi'),
+(10,'Gunma'),
+(11,'Saitama'),
+(12,'Chiba'),
+(13,'Tokyo'),
+(14,'Kanagawa'),
+(15,'Niigata'),
+(16,'Toyama'),
+(17,'Ishikawa'),
+(18,'Fukui'),
+(19,'Yamanashi'),
+(20,'Nagano'),
+(21,'Gifu'),
+(22,'Shizuoka'),
+(23,'Aichi'),
+(24,'Mie'),
+(25,'Shiga'),
+(26,'Kyoto'),
+(27,'Osaka'),
+(28,'Hyōgo'),
+(29,'Nara'),
+(30,'Wakayama'),
+(31,'Tottori'),
+(32,'Shimane'),
+(33,'Okayama'),
+(34,'Hiroshima'),
+(35,'Yamaguchi'),
+(36,'Tokushima'),
+(37,'Kagawa'),
+(38,'Ehime'),
+(39,'Kōchi'),
+(40,'Fukuoka'),
+(41,'Saga'),
+(42,'Nagasaki'),
+(43,'Kumamoto'),
+(44,'Ōita'),
+(45,'Miyazaki'),
+(46,'Kagoshima'),
+(47,'Okinawa')
+
+INSERT INTO `members` (`membersId`, `membersName`, `membersGender`, `membersDob`, `membersEmail`, `prefId`) VALUES
+(1,'Martin', 'Male', '1888-05-06', 'saitochan@gmail.com', 3),
+(2,'Fidel', 'Female', '1888-05-06', 'sawa@gmail.com', 5),
+(3,'Ryand', 'Female', '1888-05-06', 'ram@google.com', 7),
+(4,'Messy', 'Male', '1888-05-06', 'cedarcu@gmail', 10),
+(5,'Trump', 'Female', '1888-05-06', 'cedarcu@gmail', 30),
+(6,'Gerard', 'Male', '1888-05-06', 'cedarcu@gmail', 12),
+(7,'Saya', 'Male', '1888-05-06', 'cedarcu@gmail', 15),
+(8,'Jack', 'Female', '1888-05-06', 'cedarcu@gmail', 11),
+(9,'kedar', 'Female', '1888-05-06', 'saitochan@gmail.com', 12),
+(10,'kedar', 'Male', '1888-05-06', 'saitochan@gmail.com', 25),
+(11,'KING ', 'Other', '1888-05-06', 'cedarcu@gmail', 2),
+(12,'jacksaparrow', 'Male', '1888-05-06', 'rare@mya.com', 10),
+(13,'Michel', 'Male', '1898-05-06', 'saitochan@gmail.com', 6);
+(14,'Martin', 'Male', '1888-05-06', 'saitochan@gmail.com', 3),
+(15,'Fidel', 'Female', '1888-05-06', 'sawa@gmail.com', 5),
+(16,'Ryand', 'Female', '1888-05-06', 'ram@google.com', 7),
+(17,'Messy', 'Male', '1888-05-06', 'cedarcu@gmail', 10),
+(18,'Trump', 'Female', '1888-05-06', 'cedarcu@gmail', 30),
+(19,'Gerard', 'Male', '1888-05-06', 'cedarcu@gmail', 12),
+(20,'Saya', 'Male', '1888-05-06', 'cedarcu@gmail', 15),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //members add edit
+    private function save($array, $tableName, $whereId, $where, $mode)
+    {
+        $update = [];
+        foreach ($array as $key => $value) {
+        $update[] = sprintf("%s = '%s' ", $key, $value);
+        $koge = implode(",", $update);
+        }
+        $sql = sprintf("%s %s SET %s %s", $mode, $tableName, $koge, $where);
+        $result = $this->_mysqli->query($sql);
+        return $result;
+    }
+    public function insert($tableName, $array)
+    {
+        $mode = "INSERT INTO";
+        $whereId = "";
+        $this->save($array, $tableName, $whereId, $where, $mode);
+    }
+
+    public function update ($id, $array, $tableName, $whereId)
+    {
+        $mode = "UPDATE";
+        $where = "WHERE ". sprintf("%s", $whereId);
+        $this->save($array, $tableName, $whereId, $where, $mode);
+    }
+
+    // delete
+    public function del($whereId, $tableName)
+    {
+        $sql = sprintf("DELETE FROM %s WHERE %s", $tableName, $whereId);
+        $result = $this->_mysqli($sql);
+        return $result;
+    }
+
